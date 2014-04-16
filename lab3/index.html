@@ -32,12 +32,14 @@
 </head>
 
 <body>
-  <form id="login_form" role="form">
-    <div class="form-group">
-      <input type="text" class="form-control" required id="username_input" placeholder="Enter username">
-    </div>
-    <button id="login_btn" type="button" class="btn btn-default">Go to chat</button>
-  </form>
+  <div class="container">
+    <form id="login_form" role="form">
+      <div class="form-group">
+        <input type="text" class="form-control" required id="username_input" placeholder="Enter username">
+      </div>
+      <button id="login_btn" type="button" class="btn btn-default">Go to chat</button>
+    </form>
+  </div>
 
     
   </div>
@@ -51,15 +53,29 @@
       <button id="buttonHistory" class="btn btn-default">History</button>  
     </div>
     
-    <div>
-      <h3><span id="chat_room" class="label label-default"></span></h3>
+    
+    <div id="output" class="panel panel-default">
+    <div class="panel-heading">
+      <h1 id="chat_room" class="panel-title"></h1>
      
-      <ul id="chatlist" class="list-group">
-
-        
-      </ul>
     </div>
-    <div id="output" class="well well-lg"></div>
+    <div class="panel-body">
+      <div class="media pull-left message">
+      <span class="glyphicon glyphicon-user pull-left"></span>  
+        <div class="media-body">
+          <h3 class="media-heading">Username</h3>
+          <p> ALl the text here</p>
+        </div>
+      </div>
+      <div class="media pull-right message">
+        <span class="glyphicon glyphicon-user pull-right"></span>
+        <div class="media-body">
+          <h3 class="media-heading">Username</h3>
+          <p> ALl the text here</p>
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
 </body>
 </html>
