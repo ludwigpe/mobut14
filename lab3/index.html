@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>PubNub</title>
+
+  <!-- JQuery libraries -->
+  <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+
+  <!-- Bootstrap libraries -->
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <!-- Custom css 
+  <link href="pubnub.css" rel="stylesheet">
+  -->
+  <!-- Pubnub libraries -->
+  <script src='http://cdn.pubnub.com/pubnub-3.4.min.js'></script>
+
+  <!-- Pubnub credentials 
+  <script src='cred.js'></script>
+  -->
+  <!-- Homemade stuff -->
+  <script src='script.js'></script>
+  <script src='constants.js'></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+  <form id="login_form" role="form">
+    <div class="form-group">
+      <input type="text" class="form-control" required id="username_input" placeholder="Enter username">
+    </div>
+    <button id="login_btn" type="button" class="btn btn-default">Go to chat</button>
+  </form>
+
+    
+  </div>
+  <div class="container" style="display:none">
+    <div class="input-group">
+      <span class="input-group-addon glyphicon glyphicon-cloud "></span>
+      <input id="input" type="text" class="form-control" placeholder="Message">
+    </div>
+    <div class="buttons">
+      <button id="buttonSend" class="btn btn-default">Send</button>
+      <button id="buttonHistory" class="btn btn-default">History</button>  
+    </div>
+    
+    <div>
+      <h3><span id="chat_room" class="label label-default"></span></h3>
+     
+      <ul id="chatlist" class="list-group">
+
+        
+      </ul>
+    </div>
+    <div id="output" class="well well-lg"></div>
+  </div>
+</body>
+</html>

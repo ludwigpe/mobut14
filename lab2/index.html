@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- iPhone -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <!-- Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+    <script type="text/javascript" src="constants.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+  </head>
+  <body>
+    <!-- Screen 1 -->
+    <div data-role="page" id="pageone">
+      <div data-role="header" class="header">
+        <h1>Image Gallery</h1>
+        <a href="#change_theme" data-role="button" data-rel="dialog" data-mini="true" data-icon="gear" class="ui-btn-right">Settings</a>
+      </div>
+
+      <div data-role="main" id="pageone_main" class="ui-content">
+        <!--<a href="#pagetwo">Go to Page Two</a>-->
+          <ul data-role="listview" data-inset="true" id="img_list"> 
+          </ul>
+        <a href="#page_about" class="ui-btn ui-corner-all">About</a>
+      </div>
+
+      <div data-role="footer" class="footer">
+        <h1>Copyright, don't steal</h1>
+      </div>
+    </div> 
+    <!-- End of Screen 1 -->
+
+    <!-- Screen 2 -->
+    <div data-role="page" id="pagetwo">
+      <div data-role="header">
+        <a href="#pageone" data-role="button" data-icon="back">Back</a>
+        <h1>Image Gallery</h1>
+      
+        <a href="#pageone" data-role="button" data-mini="true" data-icon="home" class="ui-btn-right">Home</a>
+     
+      </div>
+
+      <div data-role="main" id"img_container"class="ui-content">
+        <img id="img_holder"/>
+        <!--<a href="#pageone">Go to Page One</a>-->
+      </div>
+
+      <div data-role="footer">
+        <h1>Copyright, don't steal etc.</h1>
+      </div>
+    </div> 
+    <!-- End of Screen 2 -->
+
+    <!-- Screen 3(about) -->
+    <div data-role="page" id="page_about">
+      <div data-role="header">
+          <a href="#pageone" data-role="button" data-icon="back">Back</a>
+        <h1>About us</h1>
+      </div>
+
+      <div data-role="main" class="ui-content">
+        <ul data-role="listview" data-inset="true" id="team_members">
+          <li data-role="list-divider">Motu members</li>
+          <!-- Dynamic -->
+        </ul>
+      </div>
+
+      <div data-role="footer">
+        <h1>Copyright, don't steal</h1>
+      </div>
+    </div> 
+    <!-- End of Screen 3 (about) -->
+
+    <!-- Settings screen -->
+    <div data-role="dialog" id="change_theme">
+        <div data-role="header">
+          <h1>Settings</h1>
+        </div>
+
+        <div role="main" class="ui-content">
+          <ul data-role="listview" data-inset="true" id="team_members">
+            <li data-role="list-divider">Change theme</li>
+            <li><a href="#" onclick="changeGlobalTheme('a');">Theme A</a></li>
+            <li><a href="#" onclick="changeGlobalTheme('b');">Theme B</a></li>
+           <!-- <li><a href="#" onclick="changeGlobalTheme('c');">Theme C</a></li>
+            <li><a href="#" onclick="changeGlobalTheme('d');">Theme D</a></li>
+            <li><a href="#" onclick="changeGlobalTheme('e');">Theme E</a></li> -->
+          </ul>
+        </div>
+    </div>
+    <!-- End of Settings screen -->
+  </body>
+</html>

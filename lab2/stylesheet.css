@@ -1,0 +1,11 @@
+#img_container {
+	padding: 10px;
+}
+
+#img_holder {
+	position: relative;
+	display: block;
+	margin: auto;
+	max-width: 90%;
+	max-height: 90%;
+}

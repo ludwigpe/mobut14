@@ -1,0 +1,17 @@
+CACHE MANIFEST
+# Version 1
+
+CACHE:
+script.js
+style.css
+images/kth.jpg
+images/nice-highres.png
+
+FALLBACK:
+images/ images/nice-highres.png
+
+NETWORK:
+http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css
+http://code.jquery.com/jquery-1.11.0.min.js
+http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js
+https://maps.googleapis.com/maps/api/js?key=AIzaSyAlGP15xRGNIxWb8fecE8hgwI8I6XxNOec&sensor=true
