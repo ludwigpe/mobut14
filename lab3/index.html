@@ -3,6 +3,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- iPhone -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <!-- Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
   <title>PubNub</title>
 
   <!-- JQuery libraries -->
@@ -55,27 +62,15 @@
     
     
     <div id="output" class="panel panel-default">
-    <div class="panel-heading">
-      <h1 id="chat_room" class="panel-title"></h1>
-     
-    </div>
-    <div class="panel-body">
-      <div class="media pull-left message">
-      <span class="glyphicon glyphicon-user pull-left"></span>  
-        <div class="media-body">
-          <h3 class="media-heading">Username</h3>
-          <p> ALl the text here</p>
-        </div>
+      <div class="panel-heading">
+        <h1 id="chat_room" class="panel-title"></h1>
       </div>
-      <div class="media pull-right message">
-        <span class="glyphicon glyphicon-user pull-right"></span>
-        <div class="media-body">
-          <h3 class="media-heading">Username</h3>
-          <p> ALl the text here</p>
-        </div>
+      <div id="containerMessages" class="panel-body">
+
+    
       </div>
     </div>
-    </div>
+   
   </div>
 </body>
 </html>

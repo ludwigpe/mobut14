@@ -4,10 +4,12 @@ $(function(){
    var input = $("#input");
    var buttonSend = $("#buttonSend");
    var buttonHistory = $("#buttonHistory");
-   var output = $("#output");
-   var chatlist = $("#chatlist");
+   var output = $("#containerMessages");
    var room;
    var username;
+   var uuid;
+   var position;
+  
 
    $("#login_btn").click(login);
    input.keypress(function(e) {
@@ -20,6 +22,8 @@ $(function(){
       publish_key   : "pub-c-8c57667b-7da5-4365-b753-5255a1eaef8d",
       subscribe_key : "sub-c-5780bfc6-c0f6-11e3-a3ad-02ee2ddab7fe"
     });
+    uuid = pubnub.uuid();
+
     function login() {
       var form = $("#login_form");
       username = $("#username_input").val();
@@ -28,24 +32,46 @@ $(function(){
       $("#login_form").hide();
       init();
     }
+    
     function init() {
+
       if(navigator.geolocation) {
         console.log("Browser supports geolocation")
+        var options = {timeout:10000};
         navigator.geolocation.getCurrentPosition(function (pos) {
+          if(room) {
+            pubnub.unsubscribe({
+              channel: LOBBY.channel
+            })
+          }
+          container.hide(500);
+          position = pos; //store global
           setChatRoom(pos)
           container.show(500);
         }, function (err) {
-          console.log("geolocation failed to get position");
-          setChatRoom(TEST_POSITION); 
+          room = LOBBY;
+          position = TEST_POSITION;
+          $("#chat_room").empty();
+          $("#chat_room").append(room.desc);
+          setupPubNub();
           container.show(500);
-        }); 
+          console.log("geolocation failed to get position");
+          
+          //$("#warning").html("Could not fetch your position, no chatting for you!").show();
+        }, options); 
       } else {
         console.log('Browser does not support geolocation');
-        setChatRoom(TEST_POSITION)
+        room = LOBBY;
+        position = TEST_POSITION;
+        $("#chat_room").empty();
+        $("#chat_room").append(room.desc);
+        setupPubNub();
         container.show(500);
+        //$("#warning").html("Could not fetch your position, no chatting for you!").show();
       }
       
     }
+
     function setChatRoom(position) {
       var closest = {};
       closest.dist = 1000000;
@@ -60,6 +86,7 @@ $(function(){
       room = closest.room;
       console.log("closes room was");
       console.log(room);
+      $("#chat_room").empty();
       $("#chat_room").append(room.desc);
       //chatlist.append("<li class='list-group-item'> Room: " + room.desc + "</li>");
       setupPubNub();
@@ -75,35 +102,48 @@ $(function(){
       return lenght;
     }
     function setupPubNub() {
+
       // receive messages
       pubnub.subscribe({
         'channel'   : room.channel,
-        'callback'  : function(message) {
-          output.html(output.html() + '<br />' + username+ ": " + message);
+        'callback'  : function(data) {          
+          var messageClass = '';
+          if(data.uuid == uuid){
+            //output.html(output.html() + '<br />' + data.username+ ": " + data.msg);
+            messageClass = "pull-right";
+          }else{
+            //output.html(output.html() + '<br />' + data.username+ ": " + data.msg);
+            messageClass = "pull-left";
+          }
+
+          var html = '<div class="media message ' + messageClass + '">'
+          html += '<span class="glyphicon glyphicon-user ' + messageClass + '"></span>';
+          html += '<div class="media-body">';
+          html += '<h3 class="media-heading ' + messageClass +' ">' + data.username + '</h3>';
+          html += '<p class="message">' + data.msg + '</p>';
+          html += '</div>';
+          html += '</div>';
+
+          output.append(html);          
         }
       });
 
-        // send messagesess
-        buttonSend.on('click', function() {
-          var msg = username + ": " + input.val();
-          pubnub.publish({
-            'channel' : room.channel,
-            'message' : msg
-          });
-          input.val('');
+      // send messages
+      buttonSend.on('click', function() {
+        pubnub.publish({
+          'channel' : room.channel,
+          'message' :  {
+            username: username,
+            uuid: uuid,
+            location: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            },
+            msg: input.val(),
+          },
         });
-
-        // check history
-        buttonHistory.on('click', function() {
-          output.html("");
-          pubnub.history({
-            count : 10,
-            channel : room.channel,
-            callback : function (message) {
-              output.append(message[0].join("<br />"))
-            }
-          });
-        });
+        input.val('');
+      });
       }
       //init();
     });

@@ -30,9 +30,18 @@ var ALL_ROOMS = [
     },
     channel: "erik_channel"
   },
-  
-];
 
+];
+var LOBBY = {
+  
+  desc: "Lobby",
+  loc: {
+    lat: 59.343548,
+    lng: 18.057478
+  },
+  channel: "lobby_channel"
+  
+}
 var TEST_POSITION = {
 	coords: {
 		latitude: 59.342332, 
