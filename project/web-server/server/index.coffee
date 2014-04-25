@@ -1,7 +1,9 @@
-http = require './http'
-debug = require('debug')("web-server")
+http    = require './http'
+sockets = require './web-sockets'
+debug   = require('debug')("web-server")
 
 
 debug "init started"
 http.init()
-debug "init completed"
+sockets.init()
+
