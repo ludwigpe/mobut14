@@ -8,7 +8,10 @@ path = require 'path'
 setupExpress = (options = {}) ->
   app = express()
   app.use assets({
-    src : "../../client/assets"
+    paths : [
+      path.resolve(__dirname,'../../client/assets/js'),
+      path.resolve(__dirname,'../../client/assets/css'),
+    ]
   })
 
   app.set 'views', path.resolve(__dirname,'../../client/views')
