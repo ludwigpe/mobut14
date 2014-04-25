@@ -5,6 +5,7 @@ socketIO = require('socket.io')
 exports.init = (options = {}) ->
   debug "init"
   io = socketIO.listen options.server
+  io.set 'log level', 1
 
 
   io.sockets.on 'connection', (socket) ->
