@@ -1,0 +1,24 @@
+{
+  "name": "web-server",
+  "version": "0.0.0",
+  "description": "Webserver for MOTU-mobut14 project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "DEBUG='web-server*' node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lupp4/mobut14"
+  },
+  "author": "",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/Lupp4/mobut14/issues"
+  },
+  "dependencies": {
+    "coffee-script": "~1.7.1",
+    "express": "~4.1.0",
+    "debug": "~0.8.0"
+  }
+}
