@@ -21,12 +21,13 @@ setupExpress = (options = {}) ->
   app.get '/', (req, res) ->
     res.render "index"
 
-  http.createServer(app).listen app.get('port'), ->
+  server = http.createServer(app)
+  server.listen app.get('port'), ->
     debug 'Express server listening on port ' + app.get('port')
 
-  return app
+  return server
 
 exports.init = (options = {}) ->
   debug "init"
-  app = setupExpress options
-  return
+  server = setupExpress options
+  return server

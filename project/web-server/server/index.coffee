@@ -4,6 +4,6 @@ debug   = require('debug')("web-server")
 
 
 debug "init started"
-http.init()
-sockets.init()
+server = http.init()
+sockets.init({ server : server })
 
