@@ -6,8 +6,8 @@ html
     script(src="/socket.io/socket.io.js")
     script(type='text/javascript').
       var socket = io.connect('http://localhost');
-      socket.on('news', function (data) {
-        console.log(data);
+      socket.on('tweet', function (tweet) {
+        console.log(tweet);
       });
 
   body

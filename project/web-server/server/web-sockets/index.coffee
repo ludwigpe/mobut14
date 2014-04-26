@@ -2,15 +2,13 @@ debug = require('debug') "web-server:web-sockets"
 socketIO = require('socket.io')
 
 
-exports.init = (options = {}) ->
+exports.init = ({server, eventEmitter}) ->
   debug "init"
-  io = socketIO.listen options.server
+  io = socketIO.listen server
   io.set 'log level', 1
-
 
   io.sockets.on 'connection', (socket) ->
     debug "socket connection"
 
-    socket.emit 'news', { hello: 'world' }
-
-
+    eventEmitter.on "tweet", (tweet) ->
+      socket.emit 'tweet', { tweet: tweet }  
