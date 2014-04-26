@@ -1,14 +1,9 @@
 html
   head
+    script(src="/socket.io/socket.io.js")
     != css('styles.css')
     != js('scripts')
-
-    script(src="/socket.io/socket.io.js")
-    script(type='text/javascript').
-      var socket = io.connect('http://localhost');
-      socket.on('tweet', function (tweet) {
-        console.log(tweet);
-      });
-
   body
-    h1 Hello World!
+    div.main
+      h1 Tweets
+      ul#tweets
