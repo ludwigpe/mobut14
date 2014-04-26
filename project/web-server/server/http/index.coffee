@@ -1,9 +1,8 @@
-debug = require('debug') "web-server:http"
+debug   = require('debug') "web-server:http"
 express = require 'express'
-assets = require 'connect-assets'
-
-http = require 'http'
-path = require 'path'
+assets  = require 'connect-assets'
+http    = require 'http'
+path    = require 'path'
 
 setupExpress = (options = {}) ->
   app = express()
