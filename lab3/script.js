@@ -3,7 +3,8 @@ $(function(){
    var container = $(".container");
    var input = $("#input");
    var buttonSend = $("#buttonSend");
-   var buttonHistory = $("#buttonHistory");
+   
+
    var output = $("#containerMessages");
    var room;
    var username;
@@ -13,10 +14,14 @@ $(function(){
 
    $("#login_btn").click(login);
    input.keypress(function(e) {
-    if(e.which == 13) {
+    if(e.which == 13 && input.val()) {
       buttonSend.click();
     }
    });
+   $("#login_form").submit(function(e) {
+      e.preventDefault();
+      login();
+   })
     // Init PubNub
     var pubnub = PUBNUB.init({
       publish_key   : "pub-c-8c57667b-7da5-4365-b753-5255a1eaef8d",
@@ -39,11 +44,6 @@ $(function(){
         console.log("Browser supports geolocation")
         var options = {timeout:10000};
         navigator.geolocation.getCurrentPosition(function (pos) {
-          if(room) {
-            pubnub.unsubscribe({
-              channel: LOBBY.channel
-            })
-          }
           container.hide(500);
           position = pos; //store global
           setChatRoom(pos)
@@ -124,12 +124,14 @@ $(function(){
           html += '</div>';
           html += '</div>';
 
-          output.append(html);          
+          output.prepend(html);          
         }
       });
 
       // send messages
       buttonSend.on('click', function() {
+        if(!input.val())
+          return;
         pubnub.publish({
           'channel' : room.channel,
           'message' :  {
