@@ -9,7 +9,11 @@ div.main {
   width: 1024px;
   padding: 25px;
 }
-
+#map-canvas {
+  position: relative;
+  height: 500px;  
+  margin: 20px;
+}
 
 ul#tweets {
   list-style: none;

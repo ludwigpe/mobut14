@@ -16,6 +16,7 @@ onTweeet = (tweet) ->
     debug tweet
 
   tweet.emotions = process tweet
+  tweet.position = processPosition tweet
   publish tweet
 
 ###
@@ -34,14 +35,37 @@ process = (tweet) ->
   debug "processing Tweet##{tweet.id}"
 
   tracking = filters.track.split ","
-  emotions = []
-
-  for word in tracking
-    re = new RegExp(word,"i")
-    if tweet.text.match(re)?
-      emotions.push word
+  emotions = []  
+  positive = new RegExp("(happy|glad|positive|excited)","i");
+  negative = new RegExp("(sad|depressed|angry|mad|unhappy|negative)","i");
+  if tweet.text.match(positive)?
+    emotions.push "happy"
+  else if tweet.text.match(negative)?
+    emotions.push "sad"
 
   return emotions
+processPosition = (tweet) ->
+  debug "processing position Tweet##{tweet.id}"
+  position = {}
+  if tweet.geo?
+    position.lat = tweet.geo.coordinates[0]
+    position.lng = tweet.geo.coordinates[1]
+    return position
+  else if tweet.coordinates?
+    # inverse order of lat lang in coordinates
+    position.lat = tweet.coordinates.coordinates[1]
+    position.lng = tweet.coordinates.coordinates[0]
+    return position
+  else if tweet.place?
+    # here goes magic stuff. The place holds a bounding-box(BB) with coordinates, simply take the first corner of the BB
+    position.lat = tweet.place.bounding_box.coordinates[0][0][1]
+    position.lat = tweet.place.bounding_box.coordinates[0][0][2]
+    return position
+
+
+
+
+
 
 ###
   Publish the tweet via http to the web-server. 
@@ -67,7 +91,7 @@ strip = (tweet) ->
 twitter = new Twitter config.twitter
 
 #TODO: Improve this ALOT.
-filters = { track : "happy,sad" , language: "en" }
+filters = { track : "I am happy, me happy, so happy" , language: "en" }
 
 twitter.stream 'statuses/filter', filters, (stream) ->  
   stream.on 'data', onTweeet
