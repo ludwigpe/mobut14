@@ -91,7 +91,7 @@ strip = (tweet) ->
 twitter = new Twitter config.twitter
 
 #TODO: Improve this ALOT.
-filters = { track : "I am happy, me happy, so happy" , language: "en" }
+filters = { track : "life" , language: "en" }
 
 twitter.stream 'statuses/filter', filters, (stream) ->  
   stream.on 'data', onTweeet

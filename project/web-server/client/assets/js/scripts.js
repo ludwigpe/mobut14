@@ -14,10 +14,25 @@ socket.on('tweet', function (data) {
 });
 var icons = {
   happy: {
-    icon: '../assets/icons/happy.png'
+    url: 'img/icons/happy.png',
+    size: new google.maps.Size(71, 71),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(17, 34),
+    scaledSize: new google.maps.Size(25, 25)
   },
   sad: {
-    icon: '../assets/icons/sad.png'
+    url: 'img/icons/sad.png',
+    size: new google.maps.Size(71, 71),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(17, 34),
+    scaledSize: new google.maps.Size(25, 25)
+  },
+  neutral: {
+    url: 'img/icons/neutral.png',
+    size: new google.maps.Size(71, 71),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(17, 34),
+    scaledSize: new google.maps.Size(25, 25)
   }
 };
 
@@ -30,13 +45,13 @@ function initialize() {
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
-  var fakeTweet = {};
+  /*var fakeTweet = {};
   fakeTweet.emotions = [];
   fakeTweet.emotions.push("happy");
   fakeTweet.position = {};
   fakeTweet.position.lat = 59.344671;
   fakeTweet.position.lng = 18.061951;
-  addMarker(fakeTweet);
+  addMarker(fakeTweet);*/
 
 }
 
@@ -47,11 +62,16 @@ function addMarker(tweet) {
     emotion = tweet.emotions[0];
     console.log(emotion);
     emoticon  = icons[emotion];
+  } else {
+    emoticon = icons.neutral;
   }
   var marker = new google.maps.Marker({
     position: new google.maps.LatLng(tweet.position.lat, tweet.position.lng),
-    icon: "happy.png",
-    map: map
+    icon: emoticon,
+    map: map,
+    draggable:false,
+    animation:google.maps.Animation.DROP,
+
 
   });
 }
