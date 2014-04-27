@@ -18,7 +18,7 @@ setupExpress = (options = {}) ->
       path.resolve(__dirname,'../../client/assets/css'),
     ]
   })
-
+  app.use '/img', express.static(path.resolve(__dirname,'../../client/assets/img'))
   app.set 'views', path.resolve(__dirname,'../../client/views')
   app.set 'view engine', 'jade'
   app.set 'port', process.env.PORT or 3000
