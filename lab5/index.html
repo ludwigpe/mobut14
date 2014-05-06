@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Pirelli</title>
+
+	<!-- JQuery libraries -->
+	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+
+	<!-- Bootstrap libraries -->
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Cloudbase.io libraries -->
+	<script src="js/CBHelper/CBHelper.js"></script>
+	<script src="js/CBHelper/CBXMLHttpRequest.js"></script>
+	<script src="js/CBHelper/md5.js"></script>
+	<script src="js/CBHelper/platforms/GenericHelper.js"></script> 
+
+	<!-- Misc libraries -->
+	<script type="text/javascript" src="js/bootstrap-rating-input.min.js"></script>
+
+	<script src="js/model.js"></script>
+	<script src="js/script.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+
+<div id="container">
+
+	<div class="row">
+		<div id="selectCategoryContainer">
+			<h2>Vänligen välj en kategori</h2>
+			
+			<div id="availableCategories">
+				<!-- Dynamic -->
+			</div>
+		</div>
+	</div>
+
+	<div class="row" style="display:none;">
+		<div id="restaurantsContainer">
+			<h2>Här är alla restauranger i kategorin <span id="currentCategory"></span></h2>
+
+			<div id="availableRestaurants">
+				<!-- Dynamic -->
+			</div>	
+		</div>
+	</div>
+</div>
+
+</body>
+
