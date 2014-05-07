@@ -1,0 +1,44 @@
+{
+    "restaurants":
+    [
+        {
+            "title": "McDonalds",
+            "description": "At McDonalds everyone leaves happy. We serve the best hamburgers in the world!",
+            "latlng":
+            {
+                "lat": 59.343739,
+                "lng": 18.055814
+            },
+            "rating": 3.4,
+            "type": "fast food",
+            "price" : {"low": 10, "high": 80},
+
+        },
+        {
+            "title": "De svarta fåren",
+            "description": "Belägen på ett av Gamla Stans mest besökta platser hittar du en historisk pärla. Restaurang De Svarta Fåren har funnits på Stortorget sedan 1950.
+                            Innan man började servera svensk husmanskost i matsalen gjordes det stora upptäckter i den dåvarande Apoteket. Här upptäckte Carl Wilhelm Scheele syret.
+                            De gångna åren har satt sina spår på den medeltida 1200-tals byggnaden, slitna röda tegelväggar, knakande golv och hängande tavlor vittnar om det.
+                            En svårslagen atmosfär och romantisk miljö. Här kan du bläddra i menyn och kombinera generösa rätter i din egen smak.",
+            "latlng":
+            {
+                "lat": 59.325079,
+                "lng": 18.070292
+            },
+            "rating": 4.0,
+            "type": "swedish",
+            "price" : {"low": 70, "high": 150},
+        },
+        {
+            "title": "Hard Rock Café",
+            "description": "Ät rockig mat med rock-klassiker!",
+            "latlng":{
+                "lat": 59.344058,
+                "lng": 18.054881
+            },
+            "rating": 3.3,
+            "type": "rockfood",
+            "price" : {"low": 110, "high": 225},
+        }
+    ]
+}

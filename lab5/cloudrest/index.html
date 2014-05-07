@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--
+* @file index.html
+*
+* The CloudSquare home page - this is where the main map is displayed
+-->
+<html>
+<head>
+  <title>ClourRest</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- iPhone -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+  <!-- Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- JQuery libraries -->
+  <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
+  <!-- Bootstrap libraries -->
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+  <script type="text/javascript" charset="utf-8" src="js/CBHelper/md5.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/CBHelper/json.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/CBHelper/CBXMLHttpRequest.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/CBHelper/CBHelper.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/CBHelper/platforms/MoSyncHelper.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/CBHelper/platforms/GenericHelper.js"></script>
+  <script type="text/javascript" charset="utf-8" src="js/script.js"></script>
+  <script type="text/javascript" charset="utf-8" src="constants.js"></script>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAlGP15xRGNIxWb8fecE8hgwI8I6XxNOec&sensor=true"></script>
+
+</head>
+<body>
+  <div id="screen" class="container-fluid">
+    <div class="row">
+      <div id="navbar" class="col-xs-3">
+        <ul class="nav nav-pills nav-stacked">
+          <li class="active">
+            <a href="#">
+              <span class="badge pull-right">42</span>
+              Home
+            </a>
+          </li>
+          <li class=>
+            <a href="#">
+              <span class="badge pull-right">42</span>
+              TEST
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-9">
+        <div id="content">
+          <!-- Here goes the list of restaurants -->
+          <div id="content_list"></div>
+          <div id="content_info" style="display:none">
+            <!-- Here goes the info of a restaurant -->
+            <!-- start of carousel -->
+            <div id="carousel_container" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol id="carousel_indicator" class="carousel-indicators">
+              </ol>
+
+              <!-- Wrapper for slides -->
+              <div id="carousel_wrapper" class="carousel-inner">
+              </div>
+
+              <!-- Controls -->
+              <a class="left carousel-control" href="#carousel_container" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" href="#carousel_container" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div>
+            <!-- end of carousel -->
+            <!-- start of well with info -->
+            <div class="well well-lg">
+              <div class="row">
+                <div class="col-xs-12">
+                  <h2 id="content_title"><!-- here goes title --></h2>
+                </div>
+              </div>
+              <div class="row">
+                <div id="content_desc" class="col-xs-12">
+                <!-- here goes desc -->
+                </div>
+              </div>
+              <div class="row">
+                <div id="content_map" class="col-xs-12">
+                <!-- here goes map -->
+                </div>
+              </div>
+              <div class="row">
+                <div id="content_comments" class="col-xs-12">
+                <!-- here goes comments -->
+                  <div class="media">
+                    <div class="pull-left">
+                      <span class="glyphicon glyphicon-user media-object"></span>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Media heading</h4>
+                      My comment rocks!
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
