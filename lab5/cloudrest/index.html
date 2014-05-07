@@ -23,6 +23,8 @@
 
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <!-- Misc libraries -->
+  <script type="text/javascript" src="js/bootstrap-rating-input.min.js"></script>
 
   <script type="text/javascript" charset="utf-8" src="js/CBHelper/md5.js"></script>
   <script type="text/javascript" charset="utf-8" src="js/CBHelper/json.js"></script>
@@ -38,7 +40,7 @@
 <body>
   <div id="screen" class="container-fluid">
     <div class="row">
-      <div id="navbar" class="col-xs-3">
+      <div id="navbar" class="col-md-3">
         <ul class="nav nav-pills nav-stacked">
           <li class="active">
             <a href="#">
@@ -54,7 +56,7 @@
           </li>
         </ul>
       </div>
-      <div class="col-xs-9">
+      <div class="col-md-9">
         <div id="content">
           <!-- Here goes the list of restaurants -->
           <div id="content_list"></div>
@@ -85,6 +87,11 @@
                 <div class="col-xs-12">
                   <h2 id="content_title"><!-- here goes title --></h2>
                 </div>
+
+              </div>
+              <div class="row">
+                <div id="content_rating" class="col-xs-6"></div>
+                <div id="content_price" class="col-xs-6"></div>
               </div>
               <div class="row">
                 <div id="content_desc" class="col-xs-12">
@@ -92,22 +99,19 @@
                 </div>
               </div>
               <div class="row">
-                <div id="content_map" class="col-xs-12">
+                <div id="content_map" class="col-md-12">
                 <!-- here goes map -->
                 </div>
               </div>
               <div class="row">
-                <div id="content_comments" class="col-xs-12">
+                <div id="comments_button" class="col-md-12">
+                <!-- here goes map -->
+                </div>
+              </div>
+              <div class="row">
+                <div id="content_comments" class="col-md-12">
                 <!-- here goes comments -->
-                  <div class="media">
-                    <div class="pull-left">
-                      <span class="glyphicon glyphicon-user media-object"></span>
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading">Media heading</h4>
-                      My comment rocks!
-                    </div>
-                  </div>
+                </div>
                 </div>
               </div>
             </div>
