@@ -17,7 +17,7 @@ function setupDB() {
         helper.insertDocument("restaurants", rest, null, function(resp) {
             console.log(resp.outputString);
         });
-    };
+    }
 }
 function initCB() {
     // initialise the helper object with the code, secret code and the
@@ -78,7 +78,7 @@ function setupContent(restaurants) {
 function showInfo(rest) {
     currentRestaurant = rest;
     console.log("entered showInfo with id: " + rest.id);
-    var $container = $("#content_comments").empty();;
+    var $container = $("#content_comments").empty();
 
     var $button = $('<button/>',
             {
@@ -90,7 +90,7 @@ function showInfo(rest) {
             }
           ).addClass("btn btn-block btn-success btn-lg").append($("<span>").addClass("glyphicon glyphicon-plus").html("kommentera"));
 
-    $("#comments_button").empty()
+    $("#comments_button").empty();
     $("#comments_button").prepend("<hr/>");
     $("#comments_button").append($button);
     console.log (rest.images);
@@ -135,7 +135,7 @@ function setupCarousel(images){
         //   $slider.addClass("active");
         //   $img.addClass("active");
         // }
-        var active = (0 == index)? "active": "";
+        var active = (0 === index)? "active": "";
         // $_CAROUSEL_INDICATOR.append($slider);
         // $_CAROUSEL_WRAPPER.append($img);
         $_CAROUSEL_INDICATOR.append("<li data-target='#carousel_container' data-slide-to='"+index+"' class='"+active+"'></li>");
@@ -156,7 +156,7 @@ function setupRating(rating) {
                 {
                     change: function(e) {
                         e.preventDefault();
-                        var val = parseInt(this.value);
+                        var val = parseInt(this.value, 10);
                         if(val) postRating(val);
 
                     }
@@ -237,7 +237,7 @@ function toggleCommentArea(rest){
       updateComments(rest);
 
       $container.append($("<hr>"));
-      $container.append($("<h3>").html("Kommentera"))
+      $container.append($("<h3>").html("Kommentera"));
 
       //create the form
       var $form = $("<form>").attr("role", "form");
@@ -253,7 +253,7 @@ function toggleCommentArea(rest){
       $form.append($group);
 
       //comment area
-      var $group = $("<div>").addClass("form-group");
+      $group = $("<div>").addClass("form-group");
       $group.append($("<label>").attr("for", "inputComment"));
       $group.append($("<input>").addClass("form-control")
         .attr("type", "text")
@@ -327,7 +327,7 @@ function postComment(comment, callback) {
 
 function getComments(rest, callback) {
   if(helper){
-        helper.searchDocuments({"rest_id": rest.id}, "comments", callback)
+        helper.searchDocuments({"rest_id": rest.id}, "comments", callback);
     } else {
       console.log("Helper not setup for comments");
     }
@@ -383,7 +383,7 @@ function postRating(rating) {
   var score = currentRestaurant.rating.score;
   var votes = currentRestaurant.rating.votes;
   console.log("old score: " + score);
-  score = ((score * (votes/(votes+1))) + (rating/(votes+1)))
+  score = ((score * (votes/(votes+1))) + (rating/(votes+1)));
   votes++;
   console.log("new score: " + score);
   console.log("num votes: " + votes);
@@ -409,7 +409,7 @@ $(function() {
     getRestaurants(null, function(resp){
       restaurants = resp.outputData;
       setupCategories();
-    })
+    });
 
     // var $goto_cat = $('<button/>',
     //         {
