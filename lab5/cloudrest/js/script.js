@@ -1,4 +1,3 @@
-var helper;
 var map;
 var marker;
 var restaurants;
@@ -9,23 +8,8 @@ var $_CONTEN_INFO;
 var $_CAROUSEL_INDICATOR;
 var $_CAROUSEL_WRAPPER;
 
-function setupDB() {
-  debugger;
-    for (var i = 0; i < ALL_RESTAURANTS.length; i++) {
+var database = new DB();
 
-        var rest = ALL_RESTAURANTS[i];
-        helper.insertDocument("restaurants", rest, null, function(resp) {
-            console.log(resp.outputString);
-        });
-    }
-}
-function initCB() {
-    // initialise the helper object with the code, secret code and the
-    // generic helper
-    helper = new CBHelper("cloudrest", "a4d63cfffc2ce45f92caded0eca59134", new GenericHelper());
-    // use the md5 library provided to set the password
-    helper.setPassword(hex_md5("supersecret1337"));
-}
 function setupContent(restaurants) {
     // here we setup all content
 
@@ -105,23 +89,6 @@ function showInfo(rest) {
     $_CONTEN_LIST.hide();
     $_CONTEN_INFO.show();
 
-}
-function getRestaurant(id, callback) {
-    if(helper){
-        helper.searchDocuments({"id": id}, "restaurants", callback)
-    } else {
-        console.log ("could not retrieve restaurant since helper is undefined")
-    }
-
-}
-function getRestaurants(searchObject, callback) {
-    if(helper) {
-      if(searchObject){
-        helper.searchDocuments(searchObject, "restaurants", callback);
-      } else {
-        helper.searchAllDocuments("restaurants", callback);
-      }
-    }
 }
 
 // Setup functions
@@ -272,7 +239,7 @@ function toggleCommentArea(rest){
                       comment.author = $("#inputName").val();
                       comment.text = $("#inputComment").val();
                       if (!comment.author || !comment.text) return; // Dont post empty comments.
-                      postComment(comment, function() {
+                      database.insert.comment(comment, function() {
                         $("#inputName").val('');
                         $("#inputComment").val('');
                         updateComments(rest); // Refetch comments.
@@ -289,7 +256,7 @@ function toggleCommentArea(rest){
   }
 
 function updateComments(rest) {
-      getComments(rest, function(resp) {
+      database.get.comments(rest, function(data) {
 
         // <div class="media">
         //             <div class="pull-left">
@@ -302,7 +269,7 @@ function updateComments(rest) {
         // we have the comments now put them into the document.
         $container = $("#comments_list_wrapper");
         $container.empty();
-        $.each(resp.outputData, function(index, comment) {
+        $.each(data, function(index, comment) {
 
           var $comment = $("<div>").addClass("media");
           $comment.append($("<div>").addClass("pull-left").append($("<span>").addClass("glyphicon glyphicon-user media-object")));
@@ -316,31 +283,15 @@ function updateComments(rest) {
 
 }
 
-function postComment(comment, callback) {
 
-  if(helper){
-    helper.insertDocument("comments", comment, null, callback);
-  } else {
-    console.log("helper not setup in postComment");
-  }
-}
-
-function getComments(rest, callback) {
-  if(helper){
-        helper.searchDocuments({"rest_id": rest.id}, "comments", callback);
-    } else {
-      console.log("Helper not setup for comments");
-    }
-
-}
 function getCategories() {
-  var cats = [];
-  if(!restaurants) {
-    helper.searchAllDocuments("restaurants", function(resp){
-      restaurants = resp.outputData;
+  if(!restaurants) { // Ensure that we have restaurants in the global variabel before running the next step
+    database.get.restaurants(function(restaurantsData) {
+      restaurants = restaurantsData;
+      return getCategories();
     });
   }
-
+  var cats = [];
   $.each(restaurants, function(_, rest) {
     if(cats.indexOf(rest.category) == -1){
         cats.push(rest.category);
@@ -372,8 +323,8 @@ function setupCategories() {
 
 }
 function selectCategory(cat) {
-  helper.searchDocuments({"category": cat}, "restaurants", function(resp){
-    setupContent(resp.outputData);
+  database.get.restaurants({"category": cat}, function(data) {
+    setupContent(data);
     $("#restaurantContainer").show("slow");
     $_CONTEN_LIST.show();
   });
@@ -391,9 +342,8 @@ function postRating(rating) {
   newRating.score = score;
   newRating.votes = votes;
   currentRestaurant.rating = newRating;
-  helper.updateDocument(currentRestaurant, {"id":currentRestaurant.id}, "restaurants",null, function(resp) {
-    debugger;
-  });
+
+  database.update.restaurant(currentRestaurant, null);
 
 }
 
@@ -403,13 +353,16 @@ $(function() {
     $_CONTEN_INFO = $("#content_info");
     $_CAROUSEL_INDICATOR = $("#carousel_indicator");
     $_CAROUSEL_WRAPPER = $("#carousel_wrapper");
-    initCB();
+    database.init();
+
     //setupDB();
     //getRestaurants();
-    getRestaurants(null, function(resp){
-      restaurants = resp.outputData;
+
+    database.get.restaurants(function(restaurantsData) {
+      restaurants = restaurantsData;
       setupCategories();
     });
+
 
     // var $goto_cat = $('<button/>',
     //         {
