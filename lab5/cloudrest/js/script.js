@@ -40,7 +40,7 @@ function setupContent(restaurants) {
 
 function showInfo(rest) {
     currentRestaurant = rest;
-    console.log("entered showInfo with id: " + rest.id);
+    console.debug("Entered page with id#" + rest.id);
     var $container = $("#content_comments").empty();
 
     var $button = $('<button/>',
