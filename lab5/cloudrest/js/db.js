@@ -43,7 +43,7 @@ var DB = function() {
   };
 
   this.update = {
-    restaurant : function(restaurant, callback) {
+    restaurant: function(restaurant, callback) {
       ensureConnection();
       console.debug("db#update#restaurant", restaurant);
       helper.updateDocument(restaurant, {"id":restaurant.id}, "restaurants", null, wrapper(callback));

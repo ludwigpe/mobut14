@@ -294,20 +294,13 @@ function selectCategory(cat) {
 }
 
 function postRating(rating) {
-  var score = currentRestaurant.rating.score;
-  var votes = currentRestaurant.rating.votes;
-  console.log("old score: " + score);
-  score = ((score * (votes/(votes+1))) + (rating/(votes+1)));
-  votes++;
-  console.log("new score: " + score);
-  console.log("num votes: " + votes);
-  var newRating = {};
-  newRating.score = score;
-  newRating.votes = votes;
-  currentRestaurant.rating = newRating;
-
+  var oldScore = currentRestaurant.rating.score;
+  var oldVotes = currentRestaurant.rating.votes;
+  var score = ((oldScore * (oldVotes/(oldVotes+1))) + (rating/(oldVotes+1)));
+  var votes = oldVotes+1;
+  console.debug("Updated score for restaurant#"+currentRestaurant.id + " from " + oldScore + " to " + score);
+  currentRestaurant.rating = { score: score, votes: votes };
   database.update.restaurant(currentRestaurant, null);
-
 }
 
 $(function() {
