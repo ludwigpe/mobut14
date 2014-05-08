@@ -2,6 +2,7 @@ var helper;
 var map;
 var marker;
 var restaurants;
+var currentRestaurant;
 
 var $_CONTEN_LIST;
 var $_CONTEN_INFO;
@@ -9,7 +10,7 @@ var $_CAROUSEL_INDICATOR;
 var $_CAROUSEL_WRAPPER;
 
 function setupDB() {
-
+  debugger;
     for (var i = 0; i < ALL_RESTAURANTS.length; i++) {
 
         var rest = ALL_RESTAURANTS[i];
@@ -27,42 +28,59 @@ function initCB() {
 }
 function setupContent(restaurants) {
     // here we setup all content
+
     var container = $("#content");
+    $_CONTEN_LIST.empty();
     var row = $("#content.row");
     $("#content_comments").hide();
 
     var colCount = 0;
     var htmlString = "<div class='row'>";
-    while(restaurants.length > 0) {
-        var rest = restaurants.shift();
-        colCount++;
+    $.each(restaurants, function(i, rest) {
+      var $rest = $("<div>").addClass("col-xs-12 col-sm-6 col-md-4")
+        .append($("<div>").addClass("thumbnail")
+          .append($("<img>").attr("src", rest.cover_img)) // end of append
+          .append($("<div>").addClass("caption")
+            .append($("<h3>").text(rest.title)) //end of append
+            .append($("<p>").text(rest.description)) //end of append
+            .append($("<button>", {
+              text: "Visa",
+              click: function(e) {
+                e.preventDefault();
+                showInfo(rest);
+              }
+            }).addClass("btn btn-primary"))));
+      $_CONTEN_LIST.append($rest);
+    });
+    // while(restaurants.length > 0) {
+    //     var rest = restaurants.shift();
+    //     colCount++;
 
-        htmlString += "<div class='col-md-4'><div class='thumbnail'>";
-        htmlString += "<img src='" + rest.cover_img + "'>";
-        htmlString += "<div class='caption'>";
-        htmlString += "<h3>"+rest.title+"</h3>";
-        htmlString += "<p>"+rest.description+"</p>";
-        htmlString += "<a href='#"+ rest.title + "' onclick='showInfo("+ rest.id +");'class='btn btn-primary' role='button'>Button</a>";
-        htmlString += "</div></div></div>"
+    //     htmlString += "<div class='col-md-4'><div class='thumbnail'>";
+    //     htmlString += "<img src='" + rest.cover_img + "'>";
+    //     htmlString += "<div class='caption'>";
+    //     htmlString += "<h3>"+rest.title+"</h3>";
+    //     htmlString += "<p>"+rest.description+"</p>";
+    //     htmlString += "<a href='#"+ rest.title + "' onclick='showInfo("+ rest.id +");'class='btn btn-primary' role='button'>Button</a>";
+    //     htmlString += "</div></div></div>"
 
-        if(0 == (colCount%3)) {
-            // we append the htmlString to container
-            htmlString += "</div>"; //closing div
-            $_CONTEN_LIST.append(htmlString);
-            htmlString = (restaurants.length > 0)? "<div class='row'>": "";
-        }
-    }
-    container.append(row);
+    //     if(0 == (colCount%3)) {
+    //         // we append the htmlString to container
+    //         htmlString += "</div>"; //closing div
+    //         $_CONTEN_LIST.append(htmlString);
+    //         htmlString = (restaurants.length > 0)? "<div class='row'>": "";
+    //     }
+    // }
+    // container.append(row);
 
 
 }
-function showInfo(id) {
-    console.log("entered showInfo with id: " + id);
+function showInfo(rest) {
+    currentRestaurant = rest;
+    console.log("entered showInfo with id: " + rest.id);
 
-    getRestaurant(id, function(resp) {
-        var rest = resp.outputData[0];
 
-        var $button = $('<button/>',
+    var $button = $('<button/>',
             {
                 click: function(e) {
                     e.preventDefault();
@@ -71,17 +89,17 @@ function showInfo(id) {
                 }
             }
           ).addClass("btn btn-block btn-success btn-lg").append($("<span>").addClass("glyphicon glyphicon-plus").html("kommentera"));
-        $("#comments_button").empty()
-        $("#comments_button").prepend("<hr/>");
-        $("#comments_button").append($button);
-        console.log (rest.images);
-        setupCarousel(rest.images);
-        setupRestaurantInfo(rest.title, rest.description);
-        setupRating(rest.rating);
-        setupCost(rest.price);
-        setupMap(rest.latlng);
-        setupType(rest.type);
-    });
+
+    $("#comments_button").empty()
+    $("#comments_button").prepend("<hr/>");
+    $("#comments_button").append($button);
+    console.log (rest.images);
+    setupCarousel(rest.images);
+    setupRestaurantInfo(rest.title, rest.description);
+    setupRating(rest.rating);
+    setupCost(rest.price);
+    setupMap(rest.latlng);
+    setupType(rest.type);
 
     // swap what to show.
     $_CONTEN_LIST.hide();
@@ -96,30 +114,44 @@ function getRestaurant(id, callback) {
     }
 
 }
-function getRestaurants() {
+function getRestaurants(searchObject, callback) {
     if(helper) {
-     helper.searchAllDocuments("restaurants", function(resp){
-
-            setupContent(resp.outputData);
-        });
+      if(searchObject){
+        helper.searchDocuments(searchObject, "restaurants", callback);
+      } else {
+        helper.searchAllDocuments("restaurants", callback);
+      }
     }
 }
 
 // Setup functions
 function setupCarousel(images){
+    $_CAROUSEL_INDICATOR.empty();
+    $_CAROUSEL_WRAPPER.empty();
     $.each(images, function( index, img) {
+        // var $slider = $("<li>").attr("data-target", "#carousel_container").attr("data-slide-to", index);
+        // var $img = $("<div>").append($("<img>").attr("src", img.src));
+        // if(index == 0) {
+        //   $slider.addClass("active");
+        //   $img.addClass("active");
+        // }
         var active = (0 == index)? "active": "";
-        $_CAROUSEL_INDICATOR.append("<li data-target='#carousel_container' data-slide-to='"+index+" class='"+active+"''></li>");
+        // $_CAROUSEL_INDICATOR.append($slider);
+        // $_CAROUSEL_WRAPPER.append($img);
+        $_CAROUSEL_INDICATOR.append("<li data-target='#carousel_container' data-slide-to='"+index+"' class='"+active+"'></li>");
         $_CAROUSEL_WRAPPER.append("<div class='item "+ active +"'><img src='"+img.src+"'></div>");
     });
 }
 function setupRestaurantInfo(title, description) {
     var $title = $("#content_title");
     var $desc = $("#content_desc");
+    $title.empty();
+    $desc.empty();
     $title.text(title);
     $desc.text(description);
 }
 function setupRating(rating) {
+  $("#content_rating").empty();
     var $rating = $("<input>",
                 {
                     change: function(e) {
@@ -139,11 +171,12 @@ function setupRating(rating) {
                 .attr("type", "number")
                 .attr("data-clearable", "remove");
   $("#content_rating").append($rating);
-  $("#content_rating").append("<p>betyg: "+rating+ "</p>");
+  $("#content_rating").append("<p>betyg: "+rating.score+ "</p>");
   $rating.rating(); //apparently this line needs to be done after DOM insertion
 
 }
 function setupCost(price) {
+  $("#content_price").empty();
   var html = "<p>pris: "+price.low+" - "+ price.high+" </p>";
   $("#content_price").append(html);
 }
@@ -282,7 +315,69 @@ function getComments(rest, callback) {
     }
 
 }
+function getCategories() {
+  var cats = [];
+  if(!restaurants) {
+    helper.searchAllDocuments("restaurants", function(resp){
+      restaurants = resp.outputData;
+    });
+  }
 
+  $.each(restaurants, function(_, rest) {
+    if(cats.indexOf(rest.category) == -1){
+        cats.push(rest.category);
+      }
+  });
+  return cats;
+}
+
+function setupCategories() {
+  var $availableCategories  = $("#availableCategories");
+  $availableCategories.empty();
+  var cats = getCategories();
+
+  $.each(cats, function(i, category){
+    $availableCategories.append(
+          $('<button/>',
+            {
+                text: category,
+                click: function(e) {
+                    e.preventDefault();
+
+                    $availableCategories.parent().hide("slow");
+                    selectCategory(category);
+                }
+            }
+          ).addClass("btn btn-primary btn-lg btn-block")
+      );
+  });
+
+}
+function selectCategory(cat) {
+  helper.searchDocuments({"category": cat}, "restaurants", function(resp){
+    setupContent(resp.outputData);
+    $("#restaurantContainer").show("slow");
+    $_CONTEN_LIST.show();
+  });
+}
+
+function postRating(rating) {
+  var score = currentRestaurant.rating.score;
+  var votes = currentRestaurant.rating.votes;
+  console.log("old score: " + score);
+  score = ((score * (votes/(votes+1))) + (rating/(votes+1)))
+  votes++;
+  console.log("new score: " + score);
+  console.log("num votes: " + votes);
+  var newRating = {};
+  newRating.score = score;
+  newRating.votes = votes;
+  currentRestaurant.rating = newRating;
+  helper.updateDocument(currentRestaurant, {"id":currentRestaurant.id}, "restaurants",null, function(resp) {
+    debugger;
+  });
+
+}
 
 $(function() {
 
@@ -292,5 +387,39 @@ $(function() {
     $_CAROUSEL_WRAPPER = $("#carousel_wrapper");
     initCB();
     //setupDB();
-    getRestaurants();
+    //getRestaurants();
+    getRestaurants(null, function(resp){
+      restaurants = resp.outputData;
+      setupCategories();
+    })
+
+    // var $goto_cat = $('<button/>',
+    //         {
+    //             click: function(e) {
+    //                 e.preventDefault();
+    //                 $_CONTEN_INFO.hide();
+    //                 $_CONTEN_LIST.show();
+    //             }
+    //         }
+    //       ).addClass("btn btn-block btn-primary").append($("<span>").addClass("glyphicon glyphicon-plus").html("Tillbaka"));
+    // $("#navbar").append($goto_cat);
+    // $_CONTEN_INFO.prepend($goto_cat);
+
+
+    var $all_cat = $('<button/>',
+            {
+                click: function(e) {
+                    e.preventDefault();
+                    $("#restaurantContainer").hide("slow");
+                    $_CONTEN_INFO.hide();
+                    $("#availableCategories").parent().show("slow");
+
+                }
+            }
+          ).addClass("btn btn-block btn-primary ").append($("<span>").addClass("glyphicon glyphicon-plus").html("Visa kategorier"));
+    $("#navbar").append($all_cat);
+    //setupCategories()
+    // helper.searchDocuments({"type": "/*/"}, "restaurants", function(resp){
+    //   debugger;
+    // });
 });
