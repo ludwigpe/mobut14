@@ -193,6 +193,8 @@ function setupMap(latlng) {
       map = new google.maps.Map(document.getElementById("content_map"),
         mapOptions);
 
+      map.setOptions({draggable: false, zoomControl: false, scrollwheel: false, disableDoubleClickZoom: true});
+
       marker = new google.maps.Marker({
         map:map,
         draggable:false,
