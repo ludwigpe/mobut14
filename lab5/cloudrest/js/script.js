@@ -268,6 +268,7 @@ function toggleCommentArea(rest){
                       postComment(comment, function() {
                         $("#inputName").val('');
                         $("#inputComment").val('');
+                        updateComments(rest); // Refetch comments.
                       });
                   }
               }
@@ -295,6 +296,8 @@ function updateComments(rest) {
         //               My comment rocks!
         //             </div>
         // we have the comments now put them into the document.
+        $container = $("#comments_list_wrapper");
+        $container.empty();
         $.each(resp.outputData, function(index, comment) {
 
           var $comment = $("<div>").addClass("media");
@@ -302,10 +305,7 @@ function updateComments(rest) {
           var $body = $("<div>").addClass("media-body").append($("<h4>").addClass("media-heading").text(comment.author));
           $body.append($("<p>").text(comment.text));
           $comment.append($body);
-          $container = $("#comments_list_wrapper");
           $container.append($comment);
-
-
         });
 
       });
