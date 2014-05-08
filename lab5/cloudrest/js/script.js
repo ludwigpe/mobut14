@@ -275,6 +275,15 @@ function toggleCommentArea(rest){
         );
 
       $container.append($form);
+      var $comments = $("<div id='comments_list_wrapper'>");
+      $container.append($comments);
+      updateComments(rest);
+      $container.show("slow");
+    }
+
+  }
+
+function updateComments(rest) {
       getComments(rest, function(resp) {
 
         // <div class="media">
@@ -293,15 +302,15 @@ function toggleCommentArea(rest){
           var $body = $("<div>").addClass("media-body").append($("<h4>").addClass("media-heading").text(comment.author));
           $body.append($("<p>").text(comment.text));
           $comment.append($body);
+          $container = $("#comments_list_wrapper");
           $container.append($comment);
+
 
         });
 
       });
-      $container.show("slow");
-    }
 
-  }
+}
 
 function postComment(comment, callback) {
 
