@@ -36,8 +36,8 @@ function setupContent(restaurants) {
             }).addClass("btn btn-primary"))));
       $_CONTEN_LIST.append($rest);
     });
-
 }
+
 function showInfo(rest) {
     currentRestaurant = rest;
     console.log("entered showInfo with id: " + rest.id);
@@ -64,7 +64,6 @@ function showInfo(rest) {
     // swap what to show.
     $_CONTEN_LIST.hide();
     $_CONTEN_INFO.show();
-
 }
 
 // Setup functions
@@ -78,6 +77,7 @@ function setupCarousel(images){
         $_CAROUSEL_WRAPPER.append("<div class='item "+ active +"'><img src='"+img.src+"'></div>");
     });
 }
+
 function setupRestaurantInfo(title, description) {
     var $title = $("#content_title");
     var $desc = $("#content_desc");
@@ -86,6 +86,7 @@ function setupRestaurantInfo(title, description) {
     $title.text(title);
     $desc.text(description);
 }
+
 function setupRating(rating) {
   $("#content_rating").empty();
     var $rating = $("<input>",
@@ -109,13 +110,14 @@ function setupRating(rating) {
   $("#content_rating").append($rating);
   $("#content_rating").append("<p>betyg: "+rating.score+ "</p>");
   $rating.rating(); //apparently this line needs to be done after DOM insertion
-
 }
+
 function setupCost(price) {
   $("#content_price").empty();
   var html = "<p>pris: "+price.low+" - "+ price.high+" </p>";
   $("#content_price").append(html);
 }
+
 function setupMap(latlng) {
 
   var loc = new google.maps.LatLng(latlng.lat, latlng.lng);
@@ -142,9 +144,7 @@ function setupMap(latlng) {
       map.setCenter(loc);
       marker.setPosition(loc);
     }
-
 }
-
 
 function toggleCommentArea(rest){
   var $container = $("#content_comments");
@@ -214,9 +214,7 @@ function toggleCommentArea(rest){
 
   $container.append($form);
   $container.show("slow");
-
 }
-
 
 function appendOneComment(comment, $container) {
   var $comment = $("<div>").addClass("media");
@@ -228,18 +226,15 @@ function appendOneComment(comment, $container) {
 }
 
 function updateComments(rest) {
-      database.get.comments(rest, function(data) {
-        // we have the comments now put them into the document.
-        $container = $("#comments_list_wrapper");
-        $container.empty();
-        $.each(data, function(index, comment) {
-          appendOneComment(comment, $container);
-        });
-
-      });
-
+  database.get.comments(rest, function(data) {
+    // we have the comments now put them into the document.
+    $container = $("#comments_list_wrapper");
+    $container.empty();
+    $.each(data, function(index, comment) {
+      appendOneComment(comment, $container);
+    });
+  });
 }
-
 
 function getCategories() {
   if(!restaurants) { // Ensure that we have restaurants in the global variabel before running the next step
@@ -277,8 +272,8 @@ function setupCategories() {
           ).addClass("btn btn-primary btn-lg btn-block")
       );
   });
-
 }
+
 function selectCategory(cat) {
   database.get.restaurants({"category": cat}, function(data) {
     setupContent(data);
@@ -322,4 +317,3 @@ $(function() {
           ).addClass("btn btn-block btn-primary ").append($("<span>").addClass("glyphicon glyphicon-plus").html("Visa kategorier"));
     $("#navbar").append($all_cat);
 });
-
