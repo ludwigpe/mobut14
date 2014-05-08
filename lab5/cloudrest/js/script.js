@@ -214,7 +214,7 @@ function toggleCommentArea(rest){
                       database.insert.comment(comment, function() {
                         $("#inputName").val('');
                         $("#inputComment").val('');
-                        updateComments(rest); // Refetch comments.
+                        appendOneComment(comment, $("#comments_list_wrapper")); // Add the new comment.
                       });
                   }
               }
@@ -227,19 +227,23 @@ function toggleCommentArea(rest){
 
   }
 
+
+function appendOneComment(comment, $container) {
+  var $comment = $("<div>").addClass("media");
+  $comment.append($("<div>").addClass("pull-left").append($("<span>").addClass("glyphicon glyphicon-user media-object")));
+  var $body = $("<div>").addClass("media-body").append($("<h4>").addClass("media-heading").text(comment.author));
+  $body.append($("<p>").text(comment.text));
+  $comment.append($body);
+  $container.append($comment);
+}
+
 function updateComments(rest) {
       database.get.comments(rest, function(data) {
         // we have the comments now put them into the document.
         $container = $("#comments_list_wrapper");
         $container.empty();
         $.each(data, function(index, comment) {
-
-          var $comment = $("<div>").addClass("media");
-          $comment.append($("<div>").addClass("pull-left").append($("<span>").addClass("glyphicon glyphicon-user media-object")));
-          var $body = $("<div>").addClass("media-body").append($("<h4>").addClass("media-heading").text(comment.author));
-          $body.append($("<p>").text(comment.text));
-          $comment.append($body);
-          $container.append($comment);
+          appendOneComment(comment, $container);
         });
 
       });
