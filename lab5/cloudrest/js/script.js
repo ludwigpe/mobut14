@@ -36,27 +36,6 @@ function setupContent(restaurants) {
             }).addClass("btn btn-primary"))));
       $_CONTEN_LIST.append($rest);
     });
-    // while(restaurants.length > 0) {
-    //     var rest = restaurants.shift();
-    //     colCount++;
-
-    //     htmlString += "<div class='col-md-4'><div class='thumbnail'>";
-    //     htmlString += "<img src='" + rest.cover_img + "'>";
-    //     htmlString += "<div class='caption'>";
-    //     htmlString += "<h3>"+rest.title+"</h3>";
-    //     htmlString += "<p>"+rest.description+"</p>";
-    //     htmlString += "<a href='#"+ rest.title + "' onclick='showInfo("+ rest.id +");'class='btn btn-primary' role='button'>Button</a>";
-    //     htmlString += "</div></div></div>"
-
-    //     if(0 == (colCount%3)) {
-    //         // we append the htmlString to container
-    //         htmlString += "</div>"; //closing div
-    //         $_CONTEN_LIST.append(htmlString);
-    //         htmlString = (restaurants.length > 0)? "<div class='row'>": "";
-    //     }
-    // }
-    // container.append(row);
-
 
 }
 function showInfo(rest) {
@@ -96,15 +75,8 @@ function setupCarousel(images){
     $_CAROUSEL_INDICATOR.empty();
     $_CAROUSEL_WRAPPER.empty();
     $.each(images, function( index, img) {
-        // var $slider = $("<li>").attr("data-target", "#carousel_container").attr("data-slide-to", index);
-        // var $img = $("<div>").append($("<img>").attr("src", img.src));
-        // if(index == 0) {
-        //   $slider.addClass("active");
-        //   $img.addClass("active");
-        // }
+
         var active = (0 === index)? "active": "";
-        // $_CAROUSEL_INDICATOR.append($slider);
-        // $_CAROUSEL_WRAPPER.append($img);
         $_CAROUSEL_INDICATOR.append("<li data-target='#carousel_container' data-slide-to='"+index+"' class='"+active+"'></li>");
         $_CAROUSEL_WRAPPER.append("<div class='item "+ active +"'><img src='"+img.src+"'></div>");
     });
@@ -257,15 +229,6 @@ function toggleCommentArea(rest){
 
 function updateComments(rest) {
       database.get.comments(rest, function(data) {
-
-        // <div class="media">
-        //             <div class="pull-left">
-        //               <span class="glyphicon glyphicon-user media-object"></span>
-        //             </div>
-        //             <div class="media-body">
-        //               <h4 class="media-heading">Media heading</h4>
-        //               My comment rocks!
-        //             </div>
         // we have the comments now put them into the document.
         $container = $("#comments_list_wrapper");
         $container.empty();
@@ -355,27 +318,10 @@ $(function() {
     $_CAROUSEL_WRAPPER = $("#carousel_wrapper");
     database.init();
 
-    //setupDB();
-    //getRestaurants();
-
     database.get.restaurants(function(restaurantsData) {
       restaurants = restaurantsData;
       setupCategories();
     });
-
-
-    // var $goto_cat = $('<button/>',
-    //         {
-    //             click: function(e) {
-    //                 e.preventDefault();
-    //                 $_CONTEN_INFO.hide();
-    //                 $_CONTEN_LIST.show();
-    //             }
-    //         }
-    //       ).addClass("btn btn-block btn-primary").append($("<span>").addClass("glyphicon glyphicon-plus").html("Tillbaka"));
-    // $("#navbar").append($goto_cat);
-    // $_CONTEN_INFO.prepend($goto_cat);
-
 
     var $all_cat = $('<button/>',
             {
@@ -389,8 +335,4 @@ $(function() {
             }
           ).addClass("btn btn-block btn-primary ").append($("<span>").addClass("glyphicon glyphicon-plus").html("Visa kategorier"));
     $("#navbar").append($all_cat);
-    //setupCategories()
-    // helper.searchDocuments({"type": "/*/"}, "restaurants", function(resp){
-    //   debugger;
-    // });
 });
