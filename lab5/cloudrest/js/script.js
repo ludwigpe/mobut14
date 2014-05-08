@@ -196,10 +196,11 @@ function toggleCommentArea(rest){
               text: "Skicka",
               click: function(e) {
                   e.preventDefault();
-                  var comment = {};
-                  comment.rest_id = rest.id;
-                  comment.author = $("#inputName").val();
-                  comment.text = $("#inputComment").val();
+                  var comment = {
+                    rest_id: rest.id,
+                    author: $("#inputName").val(),
+                    text: ("#inputComment").val()
+                  };
                   if (!comment.author || !comment.text) return; // Dont post empty comments.
                   database.insert.comment(comment, function() {
                     $("#inputName").val('');
@@ -214,8 +215,7 @@ function toggleCommentArea(rest){
   $container.append($form);
   $container.show("slow");
 
-
-  }
+}
 
 
 function appendOneComment(comment, $container) {
