@@ -290,6 +290,7 @@ function postRating(rating) {
   console.debug("Updated score for restaurant#"+currentRestaurant.id + " from " + oldScore + " to " + score);
   currentRestaurant.rating = { score: score, votes: votes };
   database.update.restaurant(currentRestaurant, null);
+  setupRating(currentRestaurant.rating);
 }
 
 $(function() {
