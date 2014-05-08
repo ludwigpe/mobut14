@@ -103,7 +103,6 @@ function setupRating(rating) {
                 .attr("data-max", 5)
                 .attr("data-min", 1)
                 .attr("id", "rating_input")
-                //.addClass("rating") //don't use this class if the rating is appended to DOM after the rating script is loaded
                 .attr("name", "Betygssätt")
                 .attr("type", "number")
                 .attr("data-clearable", "remove");
@@ -199,7 +198,7 @@ function toggleCommentArea(rest){
                   var comment = {
                     rest_id: rest.id,
                     author: $("#inputName").val(),
-                    text: ("#inputComment").val()
+                    text: $("#inputComment").val()
                   };
                   if (!comment.author || !comment.text) return; // Dont post empty comments.
                   database.insert.comment(comment, function() {
