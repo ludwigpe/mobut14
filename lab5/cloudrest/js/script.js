@@ -102,7 +102,7 @@ function setupRating(rating) {
                 )
                 .attr("data-max", 5)
                 .attr("data-min", 1)
-                .attr("id", "ididid")
+                .attr("id", "rating_input")
                 //.addClass("rating") //don't use this class if the rating is appended to DOM after the rating script is loaded
                 .attr("name", "Betygssätt")
                 .attr("type", "number")
@@ -291,6 +291,7 @@ function postRating(rating) {
   currentRestaurant.rating = { score: score, votes: votes };
   database.update.restaurant(currentRestaurant, null);
   setupRating(currentRestaurant.rating);
+  $("#rating_input").off('change');
 }
 
 $(function() {
