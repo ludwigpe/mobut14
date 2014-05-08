@@ -225,10 +225,17 @@ function toggleCommentArea(rest){
       console.log("fetch comments for ");
       console.log(rest);
 
+
       if($container.children().length > 0) {
         $container.show("slow");
         return;
       }
+      
+      $container.append($("<hr>"));
+      var $comments = $("<div id='comments_list_wrapper'>");
+      $container.append($comments);
+      updateComments(rest);
+
       $container.append($("<hr>"));
       $container.append($("<h3>").html("Kommentera"))
 
@@ -276,9 +283,6 @@ function toggleCommentArea(rest){
         );
 
       $container.append($form);
-      var $comments = $("<div id='comments_list_wrapper'>");
-      $container.append($comments);
-      updateComments(rest);
       $container.show("slow");
     }
 
