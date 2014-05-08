@@ -264,8 +264,11 @@ function toggleCommentArea(rest){
                       comment.rest_id = rest.id;
                       comment.author = $("#inputName").val();
                       comment.text = $("#inputComment").val();
-                      postComment(comment, null);
-
+                      if (!comment.author || !comment.text) return; // Dont post empty comments.
+                      postComment(comment, function() {
+                        $("#inputName").val('');
+                        $("#inputComment").val('');
+                      });
                   }
               }
             ).addClass("btn btn-primary btn-default")
