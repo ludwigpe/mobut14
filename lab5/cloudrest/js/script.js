@@ -47,7 +47,6 @@ function showInfo(rest) {
             {
                 click: function(e) {
                     e.preventDefault();
-                    console.log("pushed comments button");
                     toggleCommentArea(rest);
                 }
             }
@@ -56,13 +55,11 @@ function showInfo(rest) {
     $("#comments_button").empty();
     $("#comments_button").prepend("<hr/>");
     $("#comments_button").append($button);
-    console.log (rest.images);
     setupCarousel(rest.images);
     setupRestaurantInfo(rest.title, rest.description);
     setupRating(rest.rating);
     setupCost(rest.price);
     setupMap(rest.latlng);
-    setupType(rest.type);
 
     // swap what to show.
     $_CONTEN_LIST.hide();
@@ -147,83 +144,76 @@ function setupMap(latlng) {
     }
 
 }
-function setupType(type) {
 
-}
 
 function toggleCommentArea(rest){
   var $container = $("#content_comments");
 
-    if($container.is(':visible')){
-      //we should hide it and not re-render
-      //grab exisiting comments from cloudbase instead
-      $container.hide("slow");
-      console.log("hiding comments");
-      //alert("already visible comment area");
-    }else{
-      console.log("fetch comments for ");
-      console.log(rest);
+  if($container.is(':visible')){
+    // we should hide it and not re-render
+    // grab  exisiting comments from cloudbase instead
+    $container.hide("slow");
+    return;
+  }
+  if($container.children().length > 0) {
+    $container.show("slow");
+    return;
+  }
+    
+  $container.append($("<hr>"));
+  var $comments = $("<div id='comments_list_wrapper'>");
+  $container.append($comments);
+  updateComments(rest);
 
+  $container.append($("<hr>"));
+  $container.append($("<h3>").html("Kommentera"));
 
-      if($container.children().length > 0) {
-        $container.show("slow");
-        return;
-      }
-      
-      $container.append($("<hr>"));
-      var $comments = $("<div id='comments_list_wrapper'>");
-      $container.append($comments);
-      updateComments(rest);
+  //create the form
+  var $form = $("<form>").attr("role", "form");
 
-      $container.append($("<hr>"));
-      $container.append($("<h3>").html("Kommentera"));
+  //name
+  var $group = $("<div>").addClass("form-group");
+  $group.append($("<label>").attr("for", "inputName"));
+  $group.append($("<input>").addClass("form-control")
+    .attr("type", "text")
+    .attr("id", "inputName")
+    .attr("placeholder", "Fyll i ditt namn")
+  );
+  $form.append($group);
 
-      //create the form
-      var $form = $("<form>").attr("role", "form");
+  //comment area
+  $group = $("<div>").addClass("form-group");
+  $group.append($("<label>").attr("for", "inputComment"));
+  $group.append($("<input>").addClass("form-control")
+    .attr("type", "text")
+    .attr("id", "inputComment")
+    .attr("placeholder", "Kommentar")
+  );
+  $form.append($group);
 
-      //name
-      var $group = $("<div>").addClass("form-group");
-      $group.append($("<label>").attr("for", "inputName"));
-      $group.append($("<input>").addClass("form-control")
-        .attr("type", "text")
-        .attr("id", "inputName")
-        .attr("placeholder", "Fyll i ditt namn")
-      );
-      $form.append($group);
-
-      //comment area
-      $group = $("<div>").addClass("form-group");
-      $group.append($("<label>").attr("for", "inputComment"));
-      $group.append($("<input>").addClass("form-control")
-        .attr("type", "text")
-        .attr("id", "inputComment")
-        .attr("placeholder", "Kommentar")
-      );
-      $form.append($group);
-
-      $form.append($('<button/>',
-              {
-                  text: "Skicka",
-                  click: function(e) {
-                      e.preventDefault();
-                      var comment = {};
-                      comment.rest_id = rest.id;
-                      comment.author = $("#inputName").val();
-                      comment.text = $("#inputComment").val();
-                      if (!comment.author || !comment.text) return; // Dont post empty comments.
-                      database.insert.comment(comment, function() {
-                        $("#inputName").val('');
-                        $("#inputComment").val('');
-                        appendOneComment(comment, $("#comments_list_wrapper")); // Add the new comment.
-                      });
-                  }
+  $form.append($('<button/>',
+          {
+              text: "Skicka",
+              click: function(e) {
+                  e.preventDefault();
+                  var comment = {};
+                  comment.rest_id = rest.id;
+                  comment.author = $("#inputName").val();
+                  comment.text = $("#inputComment").val();
+                  if (!comment.author || !comment.text) return; // Dont post empty comments.
+                  database.insert.comment(comment, function() {
+                    $("#inputName").val('');
+                    $("#inputComment").val('');
+                    appendOneComment(comment, $("#comments_list_wrapper")); // Add the new comment.
+                  });
               }
-            ).addClass("btn btn-primary btn-default")
-        );
+          }
+        ).addClass("btn btn-primary btn-default")
+    );
 
-      $container.append($form);
-      $container.show("slow");
-    }
+  $container.append($form);
+  $container.show("slow");
+
 
   }
 
@@ -308,7 +298,6 @@ function postRating(rating) {
 }
 
 $(function() {
-
     $_CONTEN_LIST = $("#content_list");
     $_CONTEN_INFO = $("#content_info");
     $_CAROUSEL_INDICATOR = $("#carousel_indicator");
@@ -333,3 +322,4 @@ $(function() {
           ).addClass("btn btn-block btn-primary ").append($("<span>").addClass("glyphicon glyphicon-plus").html("Visa kategorier"));
     $("#navbar").append($all_cat);
 });
+
