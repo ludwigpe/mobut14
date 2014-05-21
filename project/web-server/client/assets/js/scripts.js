@@ -37,7 +37,10 @@ function initialize() {
   //mockupSocket();
   var mapOptions = {
     zoom: 2,
-    center: new google.maps.LatLng(44.0428154, 1.7936342)
+    center: new google.maps.LatLng(44.0428154, 1.7936342),
+    styles: [{"featureType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","stylers":[{"visibility":"on"},{"lightness":-100}]}],
+    streetViewControl: false,
+    mapTypeControl: false
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
@@ -57,7 +60,7 @@ function createTweetElement(data){
       .attr("title", data.tweet.text);
 
   li.append($("<hr/>"));
-  
+
   var badges = $("<div>");
 
   //moment badge
@@ -126,7 +129,7 @@ function mockupSocket(){
   data.tweet = fakeTweet;
 
   createTweetElement(data);
-  
+
   setTimeout(function(){
       mockupSocket();
   }, 3000);
