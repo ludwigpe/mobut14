@@ -124,6 +124,17 @@ function addMarker(tweet) {
     num_neutral++;
     $("#neutral").html(num_neutral);
   }
+
+  var total = num_happy+num_neutral+num_sad;
+
+  var green = Math.floor(((num_happy+(num_neutral/2))/total)*255);
+  var red = Math.floor(((num_sad+(num_neutral/2))/total)*255);
+
+  var color = 'rgb(' + [red, green, 0].join(',') + ')';
+
+  $("#nav").css("background-color", color);
+
+
   info.append($("<span>").addClass(labelClass).html(emotion));
   info = $("<div>").append(info).html();
   var infoWindow = new google.maps.InfoWindow({
