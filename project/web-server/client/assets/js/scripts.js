@@ -137,6 +137,7 @@ function addMarker(tweet) {
 
   info.append($("<span>").addClass(labelClass).html(emotion));
   info = $("<div>").append(info).html();
+
   var infoWindow = new google.maps.InfoWindow({
     content: info,
   });
