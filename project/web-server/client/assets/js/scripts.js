@@ -10,24 +10,24 @@ socket.on('tweet', function (data) {
 var icons = {
   happy: {
     url: 'img/icons/happy.png',
-    size: new google.maps.Size(71, 71),
+    size: new google.maps.Size(256, 256),
     origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(17, 34),
-    scaledSize: new google.maps.Size(25, 25)
+    anchor: new google.maps.Point(0, 0),
+    scaledSize: new google.maps.Size(50, 50)
   },
   sad: {
     url: 'img/icons/sad.png',
-    size: new google.maps.Size(71, 71),
+    size: new google.maps.Size(256, 256),
     origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(17, 34),
-    scaledSize: new google.maps.Size(25, 25)
+    anchor: new google.maps.Point(0, 0),
+    scaledSize: new google.maps.Size(50, 50)
   },
   neutral: {
     url: 'img/icons/neutral.png',
-    size: new google.maps.Size(71, 71),
+    size: new google.maps.Size(256, 256),
     origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(17, 34),
-    scaledSize: new google.maps.Size(25, 25)
+    anchor: new google.maps.Point(0, 0),
+    scaledSize: new google.maps.Size(50, 50)
   }
 };
 var num_happy = 0;
