@@ -30,7 +30,9 @@ var icons = {
     scaledSize: new google.maps.Size(25, 25)
   }
 };
-
+var num_happy = 0;
+var num_sad = 0;
+var num_neutral = 0;
 var map;
 function initialize() {
   //uncomment for mockup IO
@@ -94,13 +96,39 @@ function createTweetElement(data){
 function addMarker(tweet) {
   var emoticon = null
   var emotion;
+  var info = $("<div>").append(
+            $("<strong>").text(tweet.text));
+
+
+  var labelClass;
+  console.log(tweet.text);
   if (tweet.emotions[0] != null) {
     emotion = tweet.emotions[0];
-    console.log(emotion);
     emoticon  = icons[emotion];
+    if(emotion == "happy")
+    {
+      labelClass = "label label-success";
+      num_happy++;
+      $("#happy").html(num_happy);
+    }
+    else
+    {
+      labelClass = "label label-danger";
+      num_sad++;
+      $("#sad").html(num_sad);
+    }
   } else {
+    labelClass = "label label-default";
+    emotion = "neutral"
     emoticon = icons.neutral;
+    num_neutral++;
+    $("#neutral").html(num_neutral);
   }
+  info.append($("<span>").addClass(labelClass).html(emotion));
+  info = $("<div>").append(info).html();
+  var infoWindow = new google.maps.InfoWindow({
+    content: info,
+  });
   var marker = new google.maps.Marker({
     position: new google.maps.LatLng(tweet.position.lat, tweet.position.lng),
     icon: emoticon,
@@ -108,6 +136,12 @@ function addMarker(tweet) {
     draggable:false,
     animation:google.maps.Animation.DROP,
   });
+   google.maps.event.addListener(marker, 'click', function() {
+    infoWindow.open(map,marker);
+  });
+
+
+
 }
 
 function mockupSocket(){
