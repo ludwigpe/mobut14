@@ -36,11 +36,13 @@ function initialize() {
   //uncomment for mockup IO
   //mockupSocket();
   var mapOptions = {
-    zoom: 2,
+    zoom: 3,
     center: new google.maps.LatLng(44.0428154, 1.7936342),
     styles: [{"featureType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","stylers":[{"visibility":"on"},{"lightness":-100}]}],
     streetViewControl: false,
-    mapTypeControl: false
+    mapTypeControl: false,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
@@ -86,7 +88,7 @@ function createTweetElement(data){
   //init the tooltip
   //li.tooltip();
 
-  ul.prepend(li.show("slow"));
+  // ul.prepend(li.show("slow"));
 }
 
 function addMarker(tweet) {
