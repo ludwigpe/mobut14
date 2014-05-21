@@ -6,8 +6,7 @@ div.main {
   background-color: white;
   margin-left: auto;
   margin-right: auto;
-  width: 1024px;
-  padding: 25px;
+  max-width: 1024px;
 }
 #map-canvas {
   position: relative;
@@ -17,16 +16,24 @@ div.main {
 
 ul#tweets {
   list-style: none;
+  padding:20px;
+  max-height: 250px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
-ul#tweets li {
-  padding: 3px;
+
+ul#tweets li.neutral span.badge.emotion {
+  background-color: #eee;
+  color:#666;
 }
 
-ul#tweets li.sad {
-  color: red;
+ul#tweets li.sad span.badge.emotion {
+  background-color: #ff6961;
 }
 
-ul#tweets li.happy {
-  color: green;
+ul#tweets li.happy span.badge.emotion {
+  background-color: #5cb85c;
 }
+
+

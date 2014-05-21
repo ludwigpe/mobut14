@@ -1,13 +1,20 @@
 html
   head
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
     script(src="/socket.io/socket.io.js")
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlGP15xRGNIxWb8fecE8hgwI8I6XxNOec&sensor=true")
+    script(src="//code.jquery.com/jquery-1.11.0.min.js")    
+    script(src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js")
+    script(src="//momentjs.com/downloads/moment.min.js")
+    link(href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", rel="stylesheet")
     != css('styles.css')
     != js('scripts')
   body
-    div.main
-      h1 Tweets
-      ul#tweets
-      div#map-canvas
+    div.main.container-fluid
+      div.row
+        div.col-md-12
+          h1 Tweets
+          ul#tweets
+          div#map-canvas
 
 
