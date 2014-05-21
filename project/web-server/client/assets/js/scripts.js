@@ -118,7 +118,7 @@ function addMarker(tweet) {
       $("#sad").html(num_sad);
     }
   } else {
-    labelClass = "label label-default";
+    labelClass = "label label-warning";
     emotion = "neutral"
     emoticon = icons.neutral;
     num_neutral++;
